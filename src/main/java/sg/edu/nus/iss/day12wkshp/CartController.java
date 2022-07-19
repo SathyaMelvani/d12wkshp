@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.ui.Model;
 
 import java.util.List;
+import java.util.ArrayList;
+
 
 import sg.edu.nus.iss.day12wkshp.CartService;
 @Controller
@@ -15,8 +17,18 @@ public class CartController {
     public String displayCart(Model model) {
         CartService cs = new CartService();
         List<Item> cartItems = getShoppingItems();
+
+        List<Item> filteredItems = new ArrayList<>;
+        filteredItems = cartItems.stream().filter(
+            item -> item.contains(item.getItemName())
+        )
         model.addAttribute("cart", cartItems);
 
+        return "cart";
+    }
+
+    @GetMapping("{itemname}")
+    public String filteredCart(Model model) {
         return "cart";
     }
     
